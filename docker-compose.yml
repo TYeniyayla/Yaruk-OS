@@ -1,0 +1,13 @@
+# Yaruk-OS — local API (CPU). For GPU workloads, use an NVIDIA CUDA base image and deploy accordingly.
+services:
+  yaruk-api:
+    build: .
+    image: yaruk-os:local
+    ports:
+      - "8000:8000"
+    environment:
+      YARUK_LOG_LEVEL: INFO
+      YARUK_API_MAX_UPLOAD_BYTES: "52428800"
+    command: ["yaruk", "serve", "--host", "0.0.0.0", "--port", "8000"]
+    # volumes:
+    #   - ./out:/data/out

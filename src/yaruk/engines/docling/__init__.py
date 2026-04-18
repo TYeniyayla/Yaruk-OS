@@ -4,6 +4,7 @@ from typing import ClassVar
 
 from yaruk.core.provider import AnalysisContext, BaseProvider, ProviderHealth, Segment
 from yaruk.engines.docling.worker import DOCLING_AVAILABLE, DoclingWorkerHandler
+from yaruk.engines.versions import dist_version
 from yaruk.models.canonical import BoundingBox, DocumentBlock
 from yaruk.models.enums import BlockType
 
@@ -12,7 +13,7 @@ __all__ = ["DoclingProvider", "DoclingWorkerHandler"]
 
 class DoclingProvider(BaseProvider):
     name = "docling"
-    version = "2.0.0"
+    version = dist_version("docling", fallback="2.0.0")
     min_yaruk_version = "0.1.0"
     supported_ir_versions = ("v1",)
 

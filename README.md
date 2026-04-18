@@ -108,6 +108,8 @@ Uploads are size-limited and PDF magic-byte checked by default — tune with `YA
 
 ## Development
 
+See [`CONTRIBUTING.md`](CONTRIBUTING.md). Environment variable templates: [`.env.example`](.env.example).
+
 ```bash
 uv sync --all-extras
 uv run ruff check src tests
@@ -116,6 +118,13 @@ uv run pytest tests/
 ```
 
 Optional: `pre-commit install` if you use the bundled hook configuration.
+
+### Docker (API, CPU)
+
+```bash
+docker compose build
+docker compose up
+```
 
 ---
 

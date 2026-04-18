@@ -2,6 +2,7 @@ MasterPlan.md
 
 .env
 .env.*
+!.env.example
 
 # Test outputs
 Deneme/

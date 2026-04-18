@@ -7,6 +7,7 @@ from yaruk.engines.markitdown.worker import (
     MARKITDOWN_AVAILABLE,
     MarkItDownWorkerHandler,
 )
+from yaruk.engines.versions import dist_version
 from yaruk.models.canonical import BoundingBox, DocumentBlock
 from yaruk.models.enums import BlockType
 
@@ -15,7 +16,7 @@ __all__ = ["MarkItDownProvider", "MarkItDownWorkerHandler"]
 
 class MarkItDownProvider(BaseProvider):
     name = "markitdown"
-    version = "0.1.5"
+    version = dist_version("markitdown", fallback="0.1.5")
     min_yaruk_version = "0.1.0"
     supported_ir_versions = ("v1",)
 

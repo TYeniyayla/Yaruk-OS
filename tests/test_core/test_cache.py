@@ -48,6 +48,20 @@ def test_disk_cache_schema_mismatch(cache_dir: Path, sample_pdf: Path) -> None:
     assert dc.get(fhash, "marker", schema_version="v2") is None
 
 
+def test_disk_cache_lru_eviction_when_max_entries_exceeded(cache_dir: Path) -> None:
+    dc = DiskCache(cache_dir, max_entries=2, ttl_seconds=None)
+    hashes: list[str] = []
+    for i in range(3):
+        p = cache_dir.parent / f"doc{i}.pdf"
+        p.write_bytes(b"%PDF-1.4\n" + bytes([i]))
+        h = file_sha256(p)
+        hashes.append(h)
+        dc.put(h, "marker", {"i": i}, p)
+    # Oldest hash directory should have been removed after 3rd insert
+    assert dc.get(hashes[0], "marker") is None
+    assert dc.get(hashes[2], "marker") is not None
+
+
 def test_disk_cache_invalidate(cache_dir: Path, sample_pdf: Path) -> None:
     dc = DiskCache(cache_dir)
     fhash = file_sha256(sample_pdf)

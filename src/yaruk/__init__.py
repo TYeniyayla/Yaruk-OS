@@ -1,4 +1,6 @@
-__all__ = ["__version__"]
+from yaruk.version import get_version
 
-__version__ = "0.1.0"
+__version__ = get_version()
+
+__all__ = ["__version__", "get_version"]
 

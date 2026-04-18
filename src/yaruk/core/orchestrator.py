@@ -243,7 +243,11 @@ class Orchestrator:
         self._engine_cache = _EngineCache()
         self._disk_cache: DiskCache | None = None
         if cfg.settings.cache_enabled and cfg.settings.cache_dir:
-            self._disk_cache = DiskCache(cfg.settings.cache_dir)
+            self._disk_cache = DiskCache(
+                cfg.settings.cache_dir,
+                max_entries=cfg.settings.cache_max_entries,
+                ttl_seconds=cfg.settings.cache_ttl_seconds,
+            )
         self._use_subprocess = cfg.settings.use_subprocess
         self._worker_pool: WorkerPool | None = None
         self._subprocess_oom_engines: set[str] = set()

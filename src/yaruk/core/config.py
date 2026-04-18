@@ -30,6 +30,15 @@ class YarukSettings(BaseSettings):
         default=None,
         description="Directory for persistent disk cache (PDF hash-keyed). None = no disk cache.",
     )
+    cache_max_entries: int = Field(
+        default=512,
+        ge=16,
+        description="Max number of distinct input-hash cache directories before LRU-style eviction.",
+    )
+    cache_ttl_seconds: int | None = Field(
+        default=None,
+        description="If set (>=60), drop cache entries older than this many seconds (dir mtime).",
+    )
     use_subprocess: bool = True
 
     # --- Segmenter (MasterPlan 3.2): reference grid / bbox pipeline ---
