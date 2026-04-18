@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "target": "model-00003-of-00005.safetensors",
+  "parts": [
+    "model-00003-of-00005.safetensors.__lfs.part00",
+    "model-00003-of-00005.safetensors.__lfs.part01",
+    "model-00003-of-00005.safetensors.__lfs.part02"
+  ],
+  "total_bytes": 4931296656,
+  "sha256": "7cee411d9d57324e50ce064a192cc5a858276d508611b12fc599e0c9767112e0"
+}

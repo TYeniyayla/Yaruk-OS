@@ -1,7 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 models/vlm/weights/**/*.safetensors filter=lfs diff=lfs merge=lfs -text
+models/vlm/weights/**/*.__lfs.part* filter=lfs diff=lfs merge=lfs -text
 models/vlm/weights/**/*.bin filter=lfs diff=lfs merge=lfs -text
 models/vlm/weights/**/*.gguf filter=lfs diff=lfs merge=lfs -text
 models/vlm/weights/**/*.pt filter=lfs diff=lfs merge=lfs -text
 models/vlm/weights/**/*.model filter=lfs diff=lfs merge=lfs -text
+models/vlm/weights/**/*.onnx filter=lfs diff=lfs merge=lfs -text

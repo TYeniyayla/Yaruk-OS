@@ -13,6 +13,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from yaruk.vlm.lfs_chunks import reassemble_lfs_weight_shards
 from yaruk.vlm.manifest import VLMModelSpec
 
 log = logging.getLogger(__name__)
@@ -137,6 +138,7 @@ class ModelManager:
             return self._loaded_models[spec.model_id]
 
         model_path = self.ensure_model(spec, progress_cb)
+        reassemble_lfs_weight_shards(model_path)
 
         if progress_cb:
             progress_cb(f"Loading VLM: {spec.model_id}...", 50, 100)

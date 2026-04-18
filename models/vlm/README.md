@@ -13,6 +13,8 @@ The authoritative list of model IDs, Hugging Face repos, VRAM hints, and loaders
 3. If weights are not present under `weights/<model_id>/`, they can be downloaded from Hugging Face (token may be required for gated models — use `HF_TOKEN`).  
 4. Downloaded models are cached under `~/.cache/yaruk/vlm/` by default; project-local `models/vlm/weights/` is preferred when populated.
 
+**GitHub LFS:** Each stored object must be ≤ 2 GiB. Large `*.safetensors` files are stored as `.__lfs.part00`, … shards plus a `.__lfs_manifest.json`; `ModelManager` reassembles them before load. Maintenance: `PYTHONPATH=src python scripts/vlm_split_lfs_parts.py` from repo root. After reassembly, those full `*.safetensors` files are working copies only—do not commit them (they duplicate the shards).
+
 ## Layout
 
 ```
