@@ -2,3 +2,17 @@ MasterPlan.md
 
 .env
 .env.*
+
+# Test outputs
+Deneme/
+
+# Python
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# Virtual environment
+.venv/
+
+# Large VLM checkpoints (download via Hugging Face or populate locally; optional Git LFS)
+models/vlm/weights/
