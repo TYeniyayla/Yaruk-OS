@@ -1,0 +1,71 @@
+app-id: org.yaruk.Yaruk
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.python311
+  - org.freedesktop.Sdk.Extension.openjdk21
+command: yaruk
+finish-args:
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --filesystem=home
+  - --talk-name=org.freedesktop.Notifications
+  - --env=PYTHONPATH=/app/lib/python3.11/site-packages
+  - --env=JAVA_HOME=/app/jre
+  - --env=PATH=/app/jre/bin:/app/bin:/usr/bin
+
+build-options:
+  env:
+    PYTHON: /usr/bin/python3.11
+
+modules:
+  - name: python3-setup
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/python311/install.sh
+
+  # --- Embedded JRE (Adoptium Temurin 21 LTS) for ODL-PDF ---
+  # Users never need to install Java; it ships inside the Flatpak.
+  - name: openjdk21-jre
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk21/install.sh
+      - mkdir -p /app/jre
+      - cp -a /usr/lib/sdk/openjdk21/jvm/openjdk-21/* /app/jre/ || true
+      - ln -sf /app/jre/bin/java /app/bin/java || true
+
+  - name: pytorch-cuda
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=/app torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+  - name: yaruk-engines
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=/app "marker-pdf>=1.0.0"
+      - pip3 install --prefix=/app "docling>=2.5.0"
+      - pip3 install --prefix=/app "surya-ocr>=0.6.0"
+      - pip3 install --prefix=/app "transformers>=4.30.0" "pillow>=10.0.0"
+      - pip3 install --prefix=/app "pymupdf>=1.24.9"
+      - pip3 install --prefix=/app "pdftext>=0.6.0"
+      - pip3 install --prefix=/app "opendataloader-pdf>=2.2.0"
+
+  - name: yaruk-core-deps
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=/app "pydantic>=2.7" "pydantic-settings>=2.4"
+      - pip3 install --prefix=/app "sqlmodel>=0.0.22"
+      - pip3 install --prefix=/app "structlog>=24.4"
+      - pip3 install --prefix=/app "httpx>=0.27"
+      - pip3 install --prefix=/app "pyyaml>=6.0"
+
+  - name: yaruk
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-deps --prefix=/app .
+    sources:
+      - type: dir
+        path: ..

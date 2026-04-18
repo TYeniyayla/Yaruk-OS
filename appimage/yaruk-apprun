@@ -1,0 +1,17 @@
+#!/bin/bash
+# AppImage entrypoint: sets up embedded JRE before launching Yaruk.
+# The JRE is bundled at $APPDIR/usr/lib/jre so users never need to
+# install Java separately.
+
+APPDIR="$(dirname "$(readlink -f "$0")")/.."
+
+# Embedded JRE — make it visible to ODL-PDF (opendataloader-pdf)
+if [ -d "$APPDIR/usr/lib/jre" ]; then
+    export JAVA_HOME="$APPDIR/usr/lib/jre"
+    export PATH="$JAVA_HOME/bin:$PATH"
+fi
+
+export PYTHONPATH="$APPDIR/usr/lib/python3.11/site-packages:${PYTHONPATH:-}"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+exec python3.11 -m yaruk "$@"

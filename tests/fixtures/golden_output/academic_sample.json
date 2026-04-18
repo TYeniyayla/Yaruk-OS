@@ -1,0 +1,90 @@
+{
+  "source_path": "pdfs/academic_sample.pdf",
+  "total_pages": 1,
+  "metadata": {
+    "title": "Research Paper Title",
+    "author": null,
+    "subject": null,
+    "keywords": []
+  },
+  "processing_info": {
+    "trace_id": "golden-test-001",
+    "created_at": "2024-01-01T00:00:00+00:00",
+    "config_snapshot": {},
+    "provider_versions": {},
+    "routing_decisions": []
+  },
+  "pages": [
+    {
+      "page_number": 1,
+      "width": 612.0,
+      "height": 792.0,
+      "blocks": [
+        {
+          "page": 1,
+          "block_id": "p1-b1",
+          "type": "heading",
+          "text": "Research Paper Title",
+          "bbox": {"x0": 72, "y0": 72, "x1": 540, "y1": 120},
+          "confidence": 0.95,
+          "source_provider": "golden",
+          "source_version": "0.1.0",
+          "schema_version": "v1",
+          "reading_order": 0
+        },
+        {
+          "page": 1,
+          "block_id": "p1-b2",
+          "type": "heading",
+          "text": "Abstract",
+          "bbox": {"x0": 72, "y0": 140, "x1": 200, "y1": 160},
+          "confidence": 0.95,
+          "source_provider": "golden",
+          "source_version": "0.1.0",
+          "schema_version": "v1",
+          "reading_order": 1
+        },
+        {
+          "page": 1,
+          "block_id": "p1-b3",
+          "type": "paragraph",
+          "text": "This is a sample academic paper for testing the document processing pipeline. It contains equations, tables, and multi-column text.",
+          "bbox": {"x0": 72, "y0": 165, "x1": 540, "y1": 200},
+          "confidence": 0.90,
+          "source_provider": "golden",
+          "source_version": "0.1.0",
+          "schema_version": "v1",
+          "reading_order": 2
+        },
+        {
+          "page": 1,
+          "block_id": "p1-b4",
+          "type": "table",
+          "text": "| Metric | Value |\n|--------|-------|\n| Accuracy | 0.95 |\n| Speed | 120ms |",
+          "bbox": {"x0": 72, "y0": 400, "x1": 540, "y1": 500},
+          "confidence": 0.85,
+          "source_provider": "golden",
+          "source_version": "0.1.0",
+          "schema_version": "v1",
+          "reading_order": 10
+        },
+        {
+          "page": 1,
+          "block_id": "p1-b5",
+          "type": "equation",
+          "text": "E = mc^2",
+          "bbox": {"x0": 72, "y0": 520, "x1": 200, "y1": 550},
+          "confidence": 0.80,
+          "source_provider": "golden",
+          "source_version": "0.1.0",
+          "schema_version": "v1",
+          "reading_order": 11
+        }
+      ]
+    }
+  ],
+  "assets": {
+    "assets": {},
+    "block_to_assets": {}
+  }
+}

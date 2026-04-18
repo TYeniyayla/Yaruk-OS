@@ -1,0 +1,69 @@
+version: 1
+AppDir:
+  path: ./AppDir
+  app_info:
+    id: org.yaruk.Yaruk
+    name: Yaruk-OS
+    icon: yaruk
+    version: 0.1.0
+    exec: usr/bin/yaruk-apprun
+  apt:
+    arch: amd64
+    sources:
+      - sourceline: "deb http://archive.ubuntu.com/ubuntu jammy main universe"
+    packages:
+      - python3-pip
+      - python3-dev
+      - python3.11
+      - python3.11-venv
+      - libgl1-mesa-glx
+      - libglib2.0-0
+      - libgomp1
+      - libsm6
+      - libxext6
+      - libxrender1
+      - libgfortran5
+      - libopenblas0
+      - libtesseract4
+      - tesseract-ocr
+      - tesseract-ocr-eng
+  files:
+    include:
+      - /usr/lib
+      - /usr/bin
+  remove:
+    - /usr/lib/python*/distutils
+  environment:
+    PYTHONPATH: /app/usr/lib/python3.11/site-packages:$PYTHONPATH
+    PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+AppImage:
+  arch: x86_64
+  update-information: None
+  package: Yaruk-OS
+
+scripts:
+  pre-package:
+    # --- Python packages ---
+    - python3.11 -m pip install --prefix=/app/usr .
+    - python3.11 -m pip install --prefix=/app/usr "marker-pdf>=1.0.0"
+    - python3.11 -m pip install --prefix=/app/usr "docling>=2.5.0"
+    - python3.11 -m pip install --prefix=/app/usr "surya-ocr>=0.6.0"
+    - python3.11 -m pip install --prefix=/app/usr torch torchvision --index-url https://download.pytorch.org/whl/cu121
+    - python3.11 -m pip install --prefix=/app/usr "transformers>=4.30.0" "pillow>=10.0.0"
+    - python3.11 -m pip install --prefix=/app/usr "pymupdf>=1.24.9"
+    - python3.11 -m pip install --prefix=/app/usr "pdftext>=0.6.0"
+    - python3.11 -m pip install --prefix=/app/usr "pydantic>=2.7" "pydantic-settings>=2.4"
+    - python3.11 -m pip install --prefix=/app/usr "sqlmodel>=0.0.22"
+    - python3.11 -m pip install --prefix=/app/usr "structlog>=24.4"
+    - python3.11 -m pip install --prefix=/app/usr "httpx>=0.27"
+    - python3.11 -m pip install --prefix=/app/usr "pyyaml>=6.0"
+    - python3.11 -m pip install --prefix=/app/usr "opendataloader-pdf>=2.2.0"
+    # --- Embedded JRE (Adoptium Temurin 21 LTS) for ODL-PDF ---
+    - mkdir -p /app/usr/lib/jre
+    - >-
+      curl -fsSL
+      "https://api.adoptium.net/v3/binary/latest/21/ga/linux/x64/jre/hotspot/normal/eclipse"
+      | tar -xzf - --strip-components=1 -C /app/usr/lib/jre
+    # --- AppRun entrypoint script ---
+    - cp appimage/yaruk-apprun /app/usr/bin/yaruk-apprun
+    - chmod +x /app/usr/bin/yaruk-apprun

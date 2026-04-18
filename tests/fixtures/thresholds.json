@@ -1,0 +1,6 @@
+{
+  "layout_fidelity_min": 0.80,
+  "reading_order_accuracy_min": 0.85,
+  "table_structure_accuracy_min": 0.75,
+  "formula_accuracy_min": 0.70
+}
